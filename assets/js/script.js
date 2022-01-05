@@ -17,6 +17,7 @@ var taskFormHandler = function(event) {
     var taskDataObj = {
         name: taskNameInput,
         type: taskTypeInput,
+        status: "to do"
     }
 
     if (!taskNameInput || !taskTypeInput) {
@@ -199,9 +200,18 @@ var saveTasks = function() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+var loadTasks = function(taskDataObj) {
+    var initialTasks = JSON.parse(localStorage.getItem("tasks"));
+
+    initialTasks.forEach(function(task) {
+        createTaskEl(task);
+    });
+}
+
 formEl.addEventListener("submit", taskFormHandler);
 
 pageContentEl.addEventListener("click", taskButtonHandler);
 
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
+loadTasks();
